@@ -1,0 +1,15 @@
+[project]
+name = "plumbot"
+version = "0.1.0"
+description = "Stephanie Plum fortune poster"
+readme = "README.md"
+
+# pydantic<2.12 is specified to work around this bug
+# https://github.com/pydantic/pydantic/issues/12362
+# python<3.14 is specified because 3.14 is incompatible with pydantic 2.11.10
+
+requires-python = ">=3.9,<3.14"
+dependencies = [
+    "pydantic<2.12",
+    "atproto>=0.0.63",
+]
