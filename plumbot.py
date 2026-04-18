@@ -17,19 +17,19 @@ class FortuneBot(object):
         self.fortunes = self.read_fortunes(files=files, datadir=datadir)
 
     def read_fortunes(self, files: list[str], datadir="./data") -> list[str]:
-        snippets = []
+        fortunes = []
         for fname in files:
             with open(f"{datadir}/{fname}", "r") as f:
-                for snip in self.delimited_read(f, "\n%\n"):
-                    if len(snip) > 300:
+                for fortune in self.delimited_read(f, "\n%\n"):
+                    if len(fortune) > 300:
                         logging.warning(
                             'Quote too long (%d chars): "%s..."',
-                            len(snip),
-                            snip[0:50]
+                            len(fortune),
+                            fortune[0:50]
                         )
                     else:
-                        snippets.append(snip)
-        return snippets
+                        fortunes.append(fortune)
+        return fortunes
 
     def choose_fortune(self) -> str:
         return random.choice(self.fortunes)
@@ -69,8 +69,8 @@ def main():
     )
 
     # Read and post a fortune
-    bot = FortuneBot(datadir=cfg["snippets_dir"], files=cfg["snippets_files"])
-    logging.debug("read %d snippets", len(bot.fortunes))
+    bot = FortuneBot(datadir=cfg["fortune_dir"], files=cfg["fortune_files"])
+    logging.debug("read %d fortunes", len(bot.fortunes))
     fortune = bot.choose_fortune()
 
     client = Client()
